@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="page-content">
+  {% if search_results %}
+    {% comment %} {% for search_result in search_results %}
+      {{ search_result.download }} 
+        <button id="downloadButton" class="btn btn-block btn-outline-warning px-1"><i class="bi bi-download"></i></button>
+    {% endfor %} {% endcomment %}
+
+    <P>Nombre total de produits trouvé: {{ estimated_total_number }}</p>
+      <button type="submit" class="btn btn-block btn-outline-success px-3">
+        <i class="bi bi-download"></i>
+        Télécharger toutes les images ({{ estimated_total_number }})
+      </button>
+      {% if images_downloaded %}
+      <P>Listes des produits: </br>
+        {% for image_downloaded in images_downloaded %}
+          <li>
+            {{ image_downloaded }} 
+           </li>
+        {% endfor %}
+      {% endif %}
+    
+      
+
+ {% for image_list in images_list %}
+
+      <h2>{{ image_list.title }}</h2>
+      <p><strong>Résumé:</strong> {{ image_list.abstract }}</p>
+      <p><strong>Instrument:</strong> {{ image_list.instrument }}</p>
+      <p><strong>Plateforme:</strong> {{ image_list.platform }}</p>
+      <p><strong>Identifiant de série de la plateforme:</strong> {{ image_list.platformSerialIdentifier }}</p>
+      <p><strong>Niveau de traitement:</strong> {{ image_list.processingLevel }}</p>
+      <p><strong>Mots clés:</strong> {{ image_list.keywords }}</p>
+      <p><strong>Type de capteur:</strong> {{ image_list.sensorType }}</p>
+      <p><strong>Licence:</strong> {{ image_list.license }}</p>
+      <p><strong>Date de début de la mission:</strong> {{ image_list.missionStartDate }}</p>
+      <p><strong>Type de produit:</strong> {{ image_list.productType }}</p>
+      <p><strong>Heure de départ depuis le noeud ascendant:</strong> {{ image_list.startTimeFromAscendingNode }}</p>
+      <p><strong>Heure d'achèvement depuis le noeud ascendant:</strong> {{ image_list.completionTimeFromAscendingNode }}</p>
+      <p><strong>ID:</strong> {{ image_list.id }}</p>
+      <p><strong>Statut de stockage:</strong> {{ image_list.storageStatus }}</p>
+      <p><strong>Champ de classe:</strong> {{ image_list.class_field }}</p>
+      <p><strong>Jeux de données:</strong> {{ image_list.dataset }}</p>
+      <p><strong>Expver:</strong> {{ image_list.expver }}</p>
+      <p><strong>Format:</strong> {{ image_list.format }}</p>
+      <p><strong>Niveau de modèle:</strong> {{ image_list.model_level }}</p>
+      <p><strong>Étape:</strong> {{ image_list.step }}</p>
+      <p><strong>Flux:</strong> {{ image_list.stream }}</p>
+      <p><strong>Temps:</strong> {{ image_list.time }}</p>
+      <p><strong>Variable:</strong> {{ image_list.variable }}</p>
+      <p><strong>Lien de téléchargement:</strong> {{ image_list.downloadLink }}</p>
+      {% if image_list.thumbnail %}<img src="{{ image_list.thumbnail }}" alt="Image de prévisualisation"> {% endif %}
+      <a href="{% url 'download_satellite_image_from_id' image_list.id %}">Télécharger</a>
+
+  {% endfor %} 
+
+
+
+    
+    
+  {% else %}
+  <div class="row">
+   <div class="col-12 col-lg-4 col-xl-4 d-flex">
+     <div class="row">
+       <div class="col-lg-12 mx-auto">
+        <div class="card">
+          <div class="card-header py-3 bg-transparent"> 
+             <h5 class="mb-0">Choix des critères</h5>
+           </div>
+          <div class="card-body">
+            
+            <div class="border p-3 rounded">
+            <form class="row g-3" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="col-12">
+                <h6 class="form-label">Types de satellites :</h6>
+                <div class="col-lg-12 col-md-6">
+                
+                 <!-- Affiche automatiquement la liste des types de produit -->
+                 <select class="form-select" name="product_type" required>
+                  {% for product_type in product_types %}
+                  <option value="{{ product_type.ID }}">{{ product_type.title }}</option>
+                  {% endfor %}
+              </select>
+               </div>
+              </div>
+              <div class="col-12">
+               <h6 class="form-label">Période d'étude :</h6>
+                 <div class="row">
+                   <div class="col-6">
+                       <input type="date" class="form-control" name="start" required>
+                   </div>
+                   <div class="col-6">
+                     <input type="date" class="form-control" name="end" required>
+                 </div>
+               </div>
+              </div>
+              <div class="col-12">
+                <h6 class="form-label">Recherche :</h6>
+                <div class="ms-auto position-relative">
+                 <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-search"></i></div>
+                 <input class="form-control ps-5" type="text" placeholder="Zone recherchée">
+               </div>
+              </div>
+              <div class="col-12">
+               <h6 class="form-label">Zone d'étude :</h6>
+               <input class="form-control" type="text" hidden name="geometry">
+               <input class="form-control" type="file" name="shapefile">
+             </div>
+            </div>
+           </div>
+          </div>
+       </div>
+    </div>
+  </div>
+   <div class="col-12 col-lg-8 col-xl-8 d-flex">
+        <div class="card w-100 rounded-4">
+          <div class="card-body">
+           <div class="d-flex align-items-center mb-3">
+             <h6 class="mb-0">Carte</h6>
+            </div>
+            <div id="map" style="width:100%; height:100%"></div>
+          </div>
+        </div>
+     </div>
+    </div><!--end row-->
+    <div class="row">
+       <div class="col-12 col-lg-4">
+         <div class="card rounded-4 overflow-hidden">
+             <div class="card-body" style="position: relative;">
+               <div class="col">
+                 <h6>Dossier du téléchargements</h6>
+                 <div class="form-check form-check-inline">
+                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" checked>
+                   <label class="form-check-label" for="inlineRadio1">Par defaut</label>
+                 </div>
+                 <div class="form-check form-check-inline">
+                   <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="0">
+                   <label class="form-check-label" for="inlineRadio2">Choisir un chemin</label>
+                 </div>  
+               </div>                   
+           </div>
+         </div>
+    </div>
+    <div class="col-12 col-lg-4">
+       <div class="card rounded-4 overflow-hidden">
+           <div class="card-body" style="position: relative;">
+               <button type="submit" class="btn btn-block btn-outline-success px-3">
+                <i class="bi bi-search"></i>
+                Rechercher images
+              </button>
+         </div>
+       </div>
+   </div><!--end row-->  
+  </form> 
+
+  {% endif %}         
+</main>
+
+{% endblock content %}
+
+
+{% block extra_js %}
+    {{ block.super }}
+
+    <!-- Inclure la bibliothèque Leaflet -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.6.0/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/leaflet/1.6.0/leaflet.js"></script>
+
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'your.mapbox.access.token'
+        }).addTo(map);
+    </script>
+    
+
+<!-- <script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>  
+  <script>
+    new PerfectScrollbar(".review-list")
+    new PerfectScrollbar(".chat-talk")
+    var map = L.map('map', {
+      center: [5.316667, -4.033333],
+      zoom: 16,
+      maxZoom: 18,
+  });
+  var defaultBase = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Smart Agri solution'
+  }).addTo(map);
+  
+ 
+  var baseLayers = {
+      'Sattelite': defaultBase,
+      'OpenStreet': L.tileLayer.provider('OpenStreetMap'),
+  };
+ </script> -->
+
+{% endblock %}
+  

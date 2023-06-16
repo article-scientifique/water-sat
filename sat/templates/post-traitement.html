@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="page-content">
+  <div class="row">
+   <div class="card">
+    <div class="card-body">
+      <ul class="nav nav-tabs nav-success" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" data-bs-toggle="tab" href="#Optique" role="tab" aria-selected="true">
+            <div class="d-flex align-items-center">
+              <div class="tab-icon"><i class="bi bi-eye-fill font-18 me-1"></i>
+              </div>
+              <div class="tab-title">Interpretation visuelle</div>
+            </div>
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-bs-toggle="tab" href="#Radar" role="tab" aria-selected="false" tabindex="-1">
+            <div class="d-flex align-items-center">
+              <div class="tab-icon"><i class="bi bi-image font-18 me-1"></i>
+              </div>
+              <div class="tab-title">Pan-shapening</div>
+            </div>
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-bs-toggle="tab" href="#indice" role="tab" aria-selected="false" tabindex="-1">
+            <div class="d-flex align-items-center">
+              <div class="tab-icon"><i class="bi bi-layers font-18 me-1"></i>
+              </div>
+              <div class="tab-title">Calcule des indices</div>
+            </div>
+          </a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" data-bs-toggle="tab" href="#extraction" role="tab" aria-selected="false" tabindex="-1">
+            <div class="d-flex align-items-center">
+              <div class="tab-icon"><i class="bi bi-layers font-18 me-1"></i>
+              </div>
+              <div class="tab-title">Extraction des valeurs</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content py-3">
+        <div class="tab-pane fade show active" id="Optique" role="tabpanel">
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <div class="card rounded-4 overflow-hidden">
+                  <div class="card-body" style="position: relative;">
+                    <div class="col">
+                      <input class="form-control" type="file">
+                    </div>                   
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6">
+              <div class="card rounded-4 overflow-hidden">
+                  <div class="card-body" style="position: relative;">
+                    <div class="col">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0" checked>
+                        <label class="form-check-label" for="inlineRadio1">Affichage des bandes</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1">
+                        <label class="form-check-label" for="inlineRadio2">Composition colorée</label>
+                      </div>
+                    </div>                   
+                </div>
+              </div>
+            </div>
+         </div>
+         <div class="row">
+          <div class="col-12 col-lg-4 col-xl-4 d-flex">
+            <div class="row">
+              <div class="col-lg-12 mx-auto">
+               <div class="card">
+                 <div class="card-body">
+                   <div class="border p-3 rounded">
+                   <form class="row g-3">
+                     <div class="col-12">
+                       <h6 class="form-label">Types de composition :</h6>
+                       <div class="col-lg-12 col-md-6">
+                        <select class="form-select">
+                          <option>False color urban</option>
+                          <option>Sentinel-2ab</option>
+                          <option>Sentinel-1-ca</option>
+                          <option>Sentinel-3b-c</option>
+                        </select>
+                      </div>
+                     </div>
+                     <div class="col-12">
+                      <h6 class="form-label">Stretch :</h6>
+                      <div class="col-lg-12 col-md-6">
+                       <select class="form-select">
+                         <option>Linear</option>
+                         <option>Sentinel-2ab</option>
+                         <option>Sentinel-1-ca</option>
+                         <option>Sentinel-3b-c</option>
+                       </select>
+                     </div>
+                    </div>
+                    <div class="col-12">
+                      <h6 class="form-label">Types de fichier :</h6>
+                      <div class="col-lg-12 col-md-6">
+                       <select class="form-select">
+                         <option>png</option>
+                         <option>jpeg</option>
+                         <option>jpg</option>
+                         <option>wep</option>
+                       </select>
+                     </div>
+                    </div>
+                     <div class="col-12">
+                      <button class="btn btn-outline-success">
+                        <i class="bi bi-play" style="font-size: 25px;"></i>
+                        Télécharger l'image
+                      </button>
+                    </div>
+                   </form>
+                   </div>
+                  </div>
+                 </div>
+              </div>
+           </div>
+         </div>
+          <div class="col-12 col-lg-8 col-xl-8 d-flex">
+               <div class="card w-100 rounded-4">
+                 <div class="card-body">
+                  <div class="d-flex align-items-center mb-3">
+                    <h6 class="mb-0">Carte</h6>
+                   </div>
+                    <div id="map"></div>
+                 </div>
+               </div>
+            </div>
+           </div><!--end row-->
+          </div><!--end row-->  
+         <div>
+         </div>
+        </div><!--end row-->
+        </div>
+        <div class="tab-pane fade" id="Radar" role="tabpanel">
+          <div class="row">
+            <div class="col-12 col-lg-6">
+              <div class="card rounded-4 overflow-hidden">
+                  <div class="card-body" style="position: relative;">
+                    <div class="col">
+                      <h6 class="mb-2">Importation du raster</h6>
+                      <input class="form-control" type="file">
+                    </div>                   
+                </div>
+              </div>
+            </div>
+         </div>
+          <div class="row">
+            <div class="col-12 col-lg-6 col-xl-6 d-flex">
+              <div class="card rounded-4 w-100">
+                 <div class="card-body">
+                   <div class="d-flex align-items-center mb-3">
+                     <h6 class="mb-0">Image sans Pan-sharpening</h6>
+                    </div>
+                    <div id="map">
+
+                    </div>
+                 </div>
+              </div>
+            </div>
+            <div class="col-12 col-lg-6 col-xl-6 d-flex">
+             <div class="card rounded-4 w-100">
+                <div class="card-body">
+                  <div class="d-flex align-items-center mb-3">
+                    <h6 class="mb-0">Image avec Pan-sharpening</h6>
+            
+                   </div>
+                  
+                </div>
+             </div>
+           </div>
+ 
+         </div>
+        </div>
+      </div>
+    </div>
+   </div>
+  </div>    
+         
+</main>
+{% endblock content %}

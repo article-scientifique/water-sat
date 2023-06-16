@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="page-content">
+  <!--breadcrumb-->
+  <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Accueil</div>
+    <div class="ps-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 p-0">
+          <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page"> Liste des données satellitaires téléchargées</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <!--end breadcrumb-->
+    <div class="card">
+      <div class="card-header py-3">
+        <form action="" method="get">
+          <div class="row align-items-center m-0">
+            <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                <select class="form-select" name="product_type">
+                  <option selected>Type de produits</option>
+                  <option value="S1_SAR_GRD">S1_SAR_GRD</option>
+                  <option value="S1_SAR_OCN">S1_SAR_OCN</option>
+                  <option value="S1_SAR_SLC">S1_SAR_SLC</option>
+                  <option value="S2_MSI_L1C">S2_MSI_L1C</option>
+                  <option value="S2_MSI_L2A">S2_MSI_L2A</option>
+                </select>
+            </div>
+            <div class="col-md-2 col-6">
+                <input type="date" class="form-control" name="date">
+            </div>
+            <div class="col-md-2 col-6">
+               <button type="submit" class="btn btn-success">Rechercher</button>
+            </div>
+         </div>
+        </form>
+      </div>
+      <div class="card-body">
+
+        <div class="table-responsive">
+          <table class="table align-middle table-striped">
+            <tbody>
+               
+              {% if  downloaded_files %}
+              {% for downloaded_file in downloaded_files %}
+              <tr>
+                <td>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox">
+                  </div>
+                </td>
+                <td class="productlist">
+                  <a class="d-flex align-items-center gap-2" href="#">
+                    <div class="product-box">
+                        <img src="{{downloaded_file}}" alt="">
+                    </div>
+                    <div>
+                        <h6 class="mb-0 product-title">{{downloaded_file}}</h6>
+                    </div>
+                   </a>
+                </td>
+                <td><span> 10/2/2023</span></td>
+                <td><span class="badge rounded-pill bg-success">Active</span></td>
+                <td><span> add</span></td>
+                <td>
+                  <div class="d-flex align-items-center gap-3 fs-6">
+                    <a href="javascript:;" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a>
+                    <a href="javascript:;" class="text-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
+                    <a href="javascript:;" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <div>
+                <h5 class="mb-0 product-title text-center">Aucune données trouvées pour l'instant</h5>
+            </div>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+      {% if images %}
+      <nav class="float-end mt-4" aria-label="Page navigation">
+        <ul class="pagination">
+          <li class="page-item disabled"><a class="page-link" href="#">Précdent</a></li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
+        </ul>
+      </nav>
+      {% endif %}
+
+</div>
+
+
+</div>
+
+</main>
+{% endblock content %}
+  

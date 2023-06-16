@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="page-content">
+  <div class="row">
+   <div class="card">
+    <div class="card-body">
+      <ul class="nav nav-tabs nav-success" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" data-bs-toggle="tab" href="#successhome" role="tab" aria-selected="true">
+            <div class="d-flex align-items-center">
+              <div class="tab-icon"><i class="bx bx-home font-18 me-1"></i>
+              </div>
+              <div class="tab-title">Visualisation</div>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content py-3">
+        <div class="tab-pane fade show active" id="successhome" role="tabpanel">
+          <div class="row">
+            <div class="col-12 col-lg-4 col-xl-4 d-flex">
+              <div class="row">
+                <div class="col-lg-12 mx-auto">
+                 <div class="card">
+                   <div class="card-header py-3 bg-transparent"> 
+                      <h5 class="mb-0">Importaion</h5>
+                    </div>
+                   <div class="card-body">
+                     <div class="border p-3 rounded">
+                     <form class="row g-3">
+                      <div class="col-12">
+                        <h6 class="form-label">Raster :</h6>
+                        <input class="form-control" type="file">
+                      </div>
+                      <div class="col-12">
+                        <h6 class="form-label">Shapefille :</h6>
+                        <input class="form-control" type="file">
+                      </div>
+                       <div class="col-12">
+                         <h6 class="form-label">Categorie du ratser :</h6>
+                         <div class="col-lg-12 col-md-6">
+                          <select class="form-select">
+                            <option>Occupation du sol</option>
+                            <option>Sentinel-2ab</option>
+                            <option>Sentinel-1-ca</option>
+                            <option>Sentinel-3b-c</option>
+                          </select>
+                        </div>
+                       </div>
+                     </form>
+                     </div>
+                    </div>
+                   </div>
+                </div>
+             </div>
+           </div>
+            <div class="col-12 col-lg-8 col-xl-8 d-flex">
+                 <div class="card w-100 rounded-4">
+                   <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                      <h6 class="mb-0">Carte</h6>
+                     </div>
+                      <div id="map"></div>
+                      <div class="col">
+                        <button type="button" class="btn btn-outline-success px-5">
+
+                          télécharger .pdf
+                        </button>
+                      </div>  
+                   </div>
+                 </div>
+              </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+   </div>
+  </div>    
+</main>
+{% endblock content %}

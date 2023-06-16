@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+
+<main class="page-content">
+  <div class="row">
+   <div class="card">
+    <div class="card-header py-3">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row align-items-center">
+          <div class="col-md-6 col-12 ">
+            <label for="shapefile">Télécharger le fichier de ROI :</label>
+            <input type="file" class="form-control-file" id="shapefile" name="shapefile" required>
+          </div>
+          <div class="col-md-2 col-6">
+            <label for="start_date">Date de début :</label>
+            <input type="date" class="form-control" id="start_date" name="start_date">
+          </div>
+          <div class="col-md-2 col-6">
+            <label for="end_date">Date de fin :</label>
+            <input type="date" class="form-control" id="end_date" name="end_date">
+          </div>
+          <div class="col-md-2 col-12">
+            <button type="submit" class="btn btn-success">Visualiser</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    
+    <div class="card-body">
+
+    
+    <div style="display: flex; flex-wrap: wrap;">
+      <div style="flex-basis: 100%;">
+        {% if image_data %}
+          <img src="data:image/png;base64,{{ image_data }}" style="max-width: 100%;">
+        {% endif %}
+      </div>
+      
+      <div style="flex-basis: 50%;">
+        {% if figure_plot_rgb_w_water_0 %}
+          <img src="data:image/png;base64,{{ figure_plot_rgb_w_water_0 }}" style="max-width: 100%;">
+        {% endif %}
+      </div>
+    
+      <div style="flex-basis: 50%;">
+        {% if figure_plot_rgb_w_water_1 %}
+          <img src="data:image/png;base64,{{ figure_plot_rgb_w_water_1 }}" style="max-width: 100%;">
+        {% endif %}
+      </div>
+    </div>
+    </div>
+    </div>
+   </div>
+  </div>    
+</main>
+{% endblock content %}

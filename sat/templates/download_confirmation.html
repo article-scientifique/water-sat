@@ -1,0 +1,103 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<main class="page-content">
+  <!--breadcrumb-->
+  <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">Accueil</div>
+    <div class="ps-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0 p-0">
+          <li class="breadcrumb-item"><a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Confirmation</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  <!--end breadcrumb-->
+    <div class="card">
+      <div class="card-header py-3">
+        <form action="" method="get">
+          <div class="row align-items-center m-0">
+            <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                <select class="form-select" name="product_type">
+                  <option selected>Type de produits</option>
+                  <option value="S1_SAR_GRD">S1_SAR_GRD</option>
+                  <option value="S1_SAR_OCN">S1_SAR_OCN</option>
+                  <option value="S1_SAR_SLC">S1_SAR_SLC</option>
+                  <option value="S2_MSI_L1C">S2_MSI_L1C</option>
+                  <option value="S2_MSI_L2A">S2_MSI_L2A</option>
+                </select>
+            </div>
+            <div class="col-md-2 col-6">
+                <input type="date" class="form-control" name="date">
+            </div>
+            <div class="col-md-2 col-6">
+               <button type="submit" class="btn btn-success">Rechercher</button>
+            </div>
+         </div>
+        </form>
+      </div>
+
+      <div class="progress">
+      
+    </div>
+    
+      <div class="card-body">
+        {% comment %} <h1>Download Satellite Data</h1>
+        <div id="progress-bar"></div> {% endcomment %}
+        <p>Identifiants de produits :</p>
+        {{ product_ids }}
+       
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+      {% else %}
+      <p>Données satellitaires téléchargées avec succès.</p>
+      <p>
+        Accessible à l'adresse suivante sur votre machine: {% if product_downloaded %}
+        <b>{{ product_downloaded }}</b>{% endif %}
+      </p>
+
+      {% endif %}
+
+        
+
+
+        </div>
+    </div>
+
+
+</main>
+{% endblock content %}
+  
+
+{% block extra_js %}
+
+{% endblock %}
+
+
+{% comment %} {% block extra_js %}
+    {{ block.super }}
+    <script>
+      function updateProgress() {
+        fetch('{% url "download_progress" %}')
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById("progress").innerHTML = data.progress + "%";
+            if (data.progress < 100) {
+              setTimeout(updateProgress, 1000);
+            }
+          });
+      }
+      
+      updateProgress();
+      </script>
+      
+{% endblock %}
+   {% endcomment %}

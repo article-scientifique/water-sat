@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en" class="semi-dark">
+<!-- Mirrored from codervent.com/snacked/demo/ltr/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 30 Dec 2022 14:52:00 GMT -->
+<head>
+  {% load static %}
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="{% static 'assets/images/favicon-32x32.png' %}" type="image/png" />
+  <!--plugins-->
+  <link href="{% static 'assets/plugins/simplebar/css/simplebar.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/plugins/vectormap/jquery-jvectormap-2.0.2.css' %}" rel="stylesheet"/>
+  <link href="{% static 'assets/plugins/metismenu/css/metisMenu.min.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" />  
+<script src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>  
+  <!-- Bootstrap CSS -->
+  <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/bootstrap-extended.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'font/bootstrap-icons.css' %}">
+  <!-- loader-->
+	<link href="{% static 'assets/css/pace.min.css' %}" rel="stylesheet" />
+  <!--Theme Styles-->
+  <link href="{% static 'assets/css/dark-theme.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/light-theme.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/semi-dark.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/css/header-colors.css' %}" rel="stylesheet" />
+  {% block head_head%}
+  {%endblock head_head%}
+  <title> WATER SAT</title>
+</head>
+
+<body>
+  <!--start wrapper-->
+  <div class="wrapper">
+    <!--start top header-->
+      <header class="top-header">        
+        <nav class="navbar navbar-expand gap-3 align-items-center">
+          <div class="mobile-toggle-icon fs-3">
+              <i class="bi bi-list"></i>
+            </div>
+              <h5 class="h5"> Téléchargement, stockage et traitement des données satellitaires sentinel pour prédire la variation périodique et le niveau de profondeur de l'eau d'un barrage hydroélectrique</h5>
+            <div class="top-navbar-right ms-auto">
+              <ul class="navbar-nav align-items-center">
+                <li class="nav-item search-toggle-icon">
+                  <a class="nav-link" href="#">
+                    <div class="">
+                      <i class="bi bi-search"></i>
+                    </div>
+                  </a>
+              </li>
+              <li class="nav-item dropdown dropdown-large">
+                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
+                  <div class="notifications">
+                    <span class="notify-badge">2</span>
+                    <i class="bi bi-bell-fill"></i>
+                  </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end p-0">
+                  <div class="p-2 border-bottom m-2">
+                      <h5 class="h5 mb-0">Notifications</h5>
+                  </div>
+                  <div class="header-notifications-list p-2">
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex align-items-center">
+                           <div class="notification-box bg-light-primary text-primary"><i class="bi bi-basket2-fill"></i></div>
+                           <div class="ms-3 flex-grow-1">
+                             <h6 class="mb-0 dropdown-msg-user">New Orders <span class="msg-time float-end text-secondary">1 m</span></h6>
+                             <small class="mb-0 dropdown-msg-text text-secondary d-flex align-items-center">You have recived new orders</small>
+                           </div>
+                        </div>
+                      </a>
+                     
+                 </div>
+                 <div class="p-2">
+                   <div><hr class="dropdown-divider"></div>
+                     <a class="dropdown-item" href="#">
+                       <div class="text-center">Voir les Notifications</div>
+                     </a>
+                 </div>
+                </div>
+              </li>
+              <li class="nav-item dropdown dropdown-user-setting">
+                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown">
+                  <div class="user-setting d-flex align-items-center">
+                    <img src="{% static 'assets/images/avatars/avatar-1.png' %}" class="user-img" alt="">
+                  </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                     <a class="dropdown-item" href="#">
+                       <div class="d-flex align-items-center">
+                          <img src="{% static 'assets/images/avatars/avatar-1.png' %}" alt="" class="rounded-circle" width="54" height="54">
+                          <div class="ms-3">
+                            <h6 class="mb-0 dropdown-user-name">Jhon Deo</h6>
+                            <small class="mb-0 dropdown-user-designation text-secondary">HR Manager</small>
+                          </div>
+                       </div>
+                     </a>
+                   </li>
+                   <li><hr class="dropdown-divider"></li>
+                   <li>
+                      <a class="dropdown-item" href="pages-user-profile.html">
+                         <div class="d-flex align-items-center">
+                           <div class=""><i class="bi bi-person-fill"></i></div>
+                           <div class="ms-3"><span>Profile</span></div>
+                         </div>
+                       </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                         <div class="d-flex align-items-center">
+                           <div class=""><i class="bi bi-gear-fill"></i></div>
+                           <div class="ms-3"><span>Setting</span></div>
+                         </div>
+                       </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <a class="dropdown-item" href="authentication-signup-with-header-footer.html">
+                         <div class="d-flex align-items-center">
+                           <div class=""><i class="bi bi-lock-fill"></i></div>
+                           <div class="ms-3"><span>Logout</span></div>
+                         </div>
+                       </a>
+                    </li>
+                </ul>
+              </li>
+              </ul>
+              </div>
+        </nav>
+      </header>
+       <!--end top header-->
+        <!--start sidebar -->
+        <aside class="sidebar-wrapper" data-simplebar="true">
+          <div class="sidebar-header">
+            <div>
+              <img src="{% static 'assets/images/logo-icon.png' %}" class="logo-icon" alt="logo icon">
+            </div>
+            <div>
+              <h4 class="logo-text">WaterSat</h4>
+            </div>
+            <div class="toggle-icon ms-auto"> <i class="bi bi-list"></i>
+            </div>
+          </div>
+          <!--navigation-->
+          <ul class="metismenu" id="menu">
+            <li>
+              <a href="{% url 'index' %}">
+                <div class="parent-icon"><i class="bi bi-cloud-download-fill"></i>
+                </div>
+                <div class="menu-title">Recherche d'images</div>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'previsualisation_download' %}">
+                <div class="parent-icon"><i class="bi bi-cloud-download-fill"></i>
+                </div>
+                <div class="menu-title">Prévisualisation et Téléchargement</div>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'liste_images' %}">
+                <div class="parent-icon"><i class="bi bi-card-checklist"></i>
+                </div>
+                <div class="menu-title">Listes des images</div>
+              </a>
+            </li>
+            <li>
+              <a  href="{% url 'waterlevel' %}">
+                <div class="parent-icon"><i class="bi bi-arrow-down-up"></i>
+                </div>
+                <div class="menu-title">Niveau de l'eau</div>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'pretraitement' %}">
+                <div class="parent-icon"><i class="bi bi-grid-fill"></i>
+                </div>
+                <div class="menu-title">Pré-traitements</div>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'posttraitement' %}">
+                <div class="parent-icon"><i class="bi bi-diagram-3"></i>
+                </div>
+                <div class="menu-title">Post-traitements</div>
+              </a>
+            </li>
+            <li>
+              <a  href="{% url 'classification' %}">
+                <div class="parent-icon"><i class="bi bi-bezier"></i>
+                </div>
+                <div class="menu-title">Classification</div>
+              </a>
+            </li>
+            <li>
+              <a  href="{% url 'visualisation' %}">
+                <div class="parent-icon"><i class="bi bi-bar-chart"></i>
+                </div>
+                <div class="menu-title">Visualisation</div>
+              </a>
+            </li>
+            <li>
+              <a  href="{% url 'analyse' %}">
+                <div class="parent-icon"><i class="bi bi-clipboard2-data"></i>
+                </div>
+                <div class="menu-title">Analyse des données</div>
+              </a>
+            </li>
+           
+            <li>
+              <a  href="{% url 'contact' %}">
+                <div class="parent-icon"><i class="bi bi-phone"></i>
+                </div>
+                <div class="menu-title">Contactez-nous</div>
+              </a>
+              
+            </li>
+          </ul>
+          <!--end navigation-->
+       </aside>
+       <!--end sidebar -->
+       <!--start content-->
+         
+         {% block content %}
+          
+         {% endblock content %}
+          
+       <!--end page main-->
+
+       <!--start overlay-->
+        <div class="overlay nav-toggle-icon"></div>
+       <!--end overlay-->
+
+       <!--Start Back To Top Button-->
+		     <a href="javaScript:;" class="back-to-top"><i class='bx bxs-up-arrow-alt'></i></a>
+       <!--End Back To Top Button-->
+  </div>
+  <!--end wrapper-->
+
+
+  <!-- Bootstrap bundle JS -->
+  <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+  <!--plugins-->
+  <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/simplebar/js/simplebar.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/metismenu/js/metisMenu.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js' %}"></script>
+  <script src="{% static 'assets/js/pace.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/chartjs/js/Chart.min.js' %}"></script>
+  <script src="{% static 'assets/plugins/chartjs/js/Chart.extension.js' %}"></script>
+  <script src="{% static 'assets/plugins/apexcharts-bundle/js/apexcharts.min.js' %}"></script>
+   <!-- Vector map JavaScript -->
+   <script src="{% static 'assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js' %}"></script>
+   <script src="{% static 'assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+  <!--app-->
+  <script src="{% static 'assets/js/app.js' %}"></script>
+  <script src="{% static 'assets/js/index.js' %}"></script>
+ 
+{% block extra_js %}
+{% endblock extra_js %}
+
+</body>
+
+
+<!-- Mirrored from codervent.com/snacked/demo/ltr/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 30 Dec 2022 14:53:00 GMT -->
+</html>

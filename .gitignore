@@ -1,0 +1,39 @@
+# Dossiers et fichiers générés par Django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+#*.sqlite3
+
+# Dossiers et fichiers spécifiques à l'environnement virtuel
+venv/
+*.env
+
+# Fichiers de configuration spécifiques à l'IDE (à adapter selon votre IDE)
+.idea/
+.vscode/
+
+# Fichiers de logs
+*.log
+
+# Fichiers de sauvegarde
+*.bak
+*.swp
+*.swo
+
+# Fichiers de cache et de compilations
+__pycache__/
+*.pyc
+*.pyo
+
+# Fichiers de média et de données statiques (à adapter selon votre configuration)
+#media/
+#static/
+
+# Fichiers de configuration contenant des informations sensibles (à adapter selon vos besoins)
+config.ini
+secrets.json
+
+
+eodag_workspace_overview/
+venvWatersat/
