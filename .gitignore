@@ -7,7 +7,7 @@ __pycache__/
 
 # Dossiers et fichiers spécifiques à l'environnement virtuel
 venv/
-*.env
+#*.env
 
 # Fichiers de configuration spécifiques à l'IDE (à adapter selon votre IDE)
 .idea/
